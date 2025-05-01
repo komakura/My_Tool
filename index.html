@@ -29,11 +29,11 @@ function processInput() {
 
   let output = "";
   PC.forEach((name, index) => {
-    output += `### //PC[${index}]=${name}\n`;
-    output += `:HP+C(0+) @[name]:{PC[${index}]}\n`;
-    output += `:HP-C(0+) @[name]:{PC[${index}]}\n`;
-    output += `:MP+C(0+) @[name]:{PC[${index}]}\n`;
-    output += `:MP-C(0+) @[name]:{PC[${index}]}\n`;
+    output += `### //PC${index}=${name}\n`;
+    output += `:HP+C(0+) @[name]:{PC${index}}\n`;
+    output += `:HP-C(0+) @[name]:{PC${index}}\n`;
+    output += `:MP+C(0+) @[name]:{PC${index}}\n`;
+    output += `:MP-C(0+) @[name]:{PC${index}}\n`;
     output += `###\n\n`;
   });
 
