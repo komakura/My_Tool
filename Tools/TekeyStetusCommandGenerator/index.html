@@ -32,15 +32,15 @@ function processInput() {
   let output = "";
   PC.forEach((name, index) => {
     output += `### //Character${index}=${name}\n`;
-    output += `:HP= @[name]:{PC${index}}\n`;
-    output += `:HP+ @[name]:{PC${index}}\n`;
-    output += `:HP- @[name]:{PC${index}}\n`;
-    output += `:MP+ @[name]:{PC${index}}\n`;
-    output += `:MP- @[name]:{PC${index}}\n`;
-    output += `:HP+C(0+) @[name]:{PC${index}}\n`;
-    output += `:HP-C(0+) @[name]:{PC${index}}\n`;
-    output += `:MP+C(0+) @[name]:{PC${index}}\n`;
-    output += `:MP-C(0+) @[name]:{PC${index}}\n`;
+    output += `:HP= @[name]:{Character${index}}\n`;
+    output += `:HP+ @[name]:{Character${index}}\n`;
+    output += `:HP- @[name]:{Character${index}}\n`;
+    output += `:MP+ @[name]:{Character${index}}\n`;
+    output += `:MP- @[name]:{Character${index}}\n`;
+    output += `:HP+C(0+) @[name]:{Character${index}}\n`;
+    output += `:HP-C(0+) @[name]:{Character${index}}\n`;
+    output += `:MP+C(0+) @[name]:{Character${index}}\n`;
+    output += `:MP-C(0+) @[name]:{Character${index}}\n`;
     output += `###\n\n`;
   });
 
