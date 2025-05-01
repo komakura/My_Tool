@@ -11,8 +11,9 @@
 </head>
 <body>
 
-<h2>複数行テキストを入力</h2>
+<h2>Tekeyのイニシアチブの中身をコピペして</h2>
 <a>Tekeyのイニシアチブの中身をコピペして。数字だけ以外の文字を名前として修正するコマンドを生成する。<a/>
+<a>項目名は選択しないで。<a/>
 <textarea id="inputText"></textarea>
 <br>
 <button onclick="processInput()">生成</button>
@@ -30,8 +31,12 @@ function processInput() {
 
   let output = "";
   PC.forEach((name, index) => {
-    output += `### //PC${index}=${name}\n`;
+    output += `### //Character${index}=${name}\n`;
     output += `:HP= @[name]:{PC${index}}\n`;
+    output += `:HP+ @[name]:{PC${index}}\n`;
+    output += `:HP- @[name]:{PC${index}}\n`;
+    output += `:MP+ @[name]:{PC${index}}\n`;
+    output += `:MP- @[name]:{PC${index}}\n`;
     output += `:HP+C(0+) @[name]:{PC${index}}\n`;
     output += `:HP-C(0+) @[name]:{PC${index}}\n`;
     output += `:MP+C(0+) @[name]:{PC${index}}\n`;
