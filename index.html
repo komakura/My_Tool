@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>PC”z—ñ¶¬ƒc[ƒ‹</title>
+  <title>PCé…åˆ—ç”Ÿæˆãƒ„ãƒ¼ãƒ«</title>
   <style>
     body { font-family: sans-serif; padding: 20px; }
     textarea { width: 100%; height: 150px; }
@@ -11,12 +11,12 @@
 </head>
 <body>
 
-<h2>•¡”sƒeƒLƒXƒg‚ğ“ü—Í</h2>
+<h2>è¤‡æ•°è¡Œãƒ†ã‚­ã‚¹ãƒˆã‚’å…¥åŠ›</h2>
 <textarea id="inputText"></textarea>
 <br>
-<button onclick="processInput()">¶¬</button>
+<button onclick="processInput()">ç”Ÿæˆ</button>
 
-<h2>o—Í</h2>
+<h2>å‡ºåŠ›</h2>
 <pre id="output"></pre>
 
 <script>
@@ -24,17 +24,16 @@ function processInput() {
   const input = document.getElementById("inputText").value;
   const lines = input.split(/\r?\n/);
 
-  // ”šˆÈŠO‚ğ’Šo
+  // æ•°å­—ä»¥å¤–ã‚’æŠ½å‡ºï¼ˆç©ºç™½ãƒ»ç©ºè¡Œã‚‚é™¤å¤–ï¼‰
   const PC = lines.filter(line => isNaN(line.trim()) && line.trim() !== "");
 
   let output = "";
   PC.forEach((name, index) => {
-    const pcLabel = `PC${index + 1}`;
-    output += `###@//${pcLabel}=PC[${index}]\n`;
-    output += `:HP+C(0+) @[name]:{${pcLabel}}\n`;
-    output += `:HP-C(0+) @[name]:{${pcLabel}}\n`;
-    output += `:MP+C(0+) @[name]:{${pcLabel}}\n`;
-    output += `:MP-C(0+) @[name]:{${pcLabel}}\n`;
+    output += `### //${name}=PC[${index}]\n`;
+    output += `:HP+C(0+) @[name]:{${name}}\n`;
+    output += `:HP-C(0+) @[name]:{${name}}\n`;
+    output += `:MP+C(0+) @[name]:{${name}}\n`;
+    output += `:MP-C(0+) @[name]:{${name}}\n`;
     output += `###\n\n`;
   });
 
