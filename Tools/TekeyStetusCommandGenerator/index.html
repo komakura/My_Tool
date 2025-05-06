@@ -16,10 +16,33 @@
 <a>項目名は選択しないで。<a/>
 <textarea id="inputText"></textarea>
 <br>
+
+<!-- チェックボックスを追加 -->
+<div>
+  <label><input type="checkbox" id="hp" checked>:HP=</label>
+  <label><input type="checkbox" id="hpPlus" checked>:HP+</label>
+  <label><input type="checkbox" id="hpMinus" checked>:HP-</label>
+  <label><input type="checkbox" id="mpPlus" checked>:MP+</label>
+  <label><input type="checkbox" id="mpMinus" checked>:MP-</label>
+  <label><input type="checkbox" id="hpCPlus">:HP+C(0+)</label>
+  <label><input type="checkbox" id="hpCMinus">:HP-C(0+)</label>
+  <label><input type="checkbox" id="mpCPlus">:MP+C(0+)</label>
+  <label><input type="checkbox" id="mpCMinus">:MP-C(0+)</label>
+</div>
+<br>
+
 <button onclick="processInput()">生成</button>
 
 <h2>出力</h2>
-<textarea id="output" style="height: auto;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';"></textarea>
+<textarea id="output" style="height: 150px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
+### //Character0=
+:HP= @[name]:{Character0}
+:HP+ @[name]:{Character0}
+:HP- @[name]:{Character0}
+:MP+ @[name]:{Character0}
+:MP- @[name]:{Character0}
+###
+</textarea>
 
 <script>
 function adjustTextareaHeight() {
@@ -35,18 +58,29 @@ function processInput() {
   // 数字以外を抽出（空白・空行も除外）
   const PC = lines.filter(line => isNaN(line.trim()) && line.trim() !== "");
 
+  // チェックボックスの状態を取得
+  const includeHP = document.getElementById("hp").checked;
+  const includeHPPlus = document.getElementById("hpPlus").checked;
+  const includeHPMinus = document.getElementById("hpMinus").checked;
+  const includeMPPlus = document.getElementById("mpPlus").checked;
+  const includeMPMinus = document.getElementById("mpMinus").checked;
+  const includeHPCPlus = document.getElementById("hpCPlus").checked;
+  const includeHPCMinus = document.getElementById("hpCMinus").checked;
+  const includeMPCPlus = document.getElementById("mpCPlus").checked;
+  const includeMPCMinus = document.getElementById("mpCMinus").checked;
+
   let output = "";
   PC.forEach((name, index) => {
     output += `### //Character${index}=${name}\n`;
-    output += `:HP= @[name]:{Character${index}}\n`;
-    output += `:HP+ @[name]:{Character${index}}\n`;
-    output += `:HP- @[name]:{Character${index}}\n`;
-    output += `:MP+ @[name]:{Character${index}}\n`;
-    output += `:MP- @[name]:{Character${index}}\n`;
-    output += `:HP+C(0+) @[name]:{Character${index}}\n`;
-    output += `:HP-C(0+) @[name]:{Character${index}}\n`;
-    output += `:MP+C(0+) @[name]:{Character${index}}\n`;
-    output += `:MP-C(0+) @[name]:{Character${index}}\n`;
+    if (includeHP) output += `:HP= @[name]:{Character${index}}\n`;
+    if (includeHPPlus) output += `:HP+ @[name]:{Character${index}}\n`;
+    if (includeHPMinus) output += `:HP- @[name]:{Character${index}}\n`;
+    if (includeMPPlus) output += `:MP+ @[name]:{Character${index}}\n`;
+    if (includeMPMinus) output += `:MP- @[name]:{Character${index}}\n`;
+    if (includeHPCPlus) output += `:HP+C(0+) @[name]:{Character${index}}\n`;
+    if (includeHPCMinus) output += `:HP-C(0+) @[name]:{Character${index}}\n`;
+    if (includeMPCPlus) output += `:MP+C(0+) @[name]:{Character${index}}\n`;
+    if (includeMPCMinus) output += `:MP-C(0+) @[name]:{Character${index}}\n`;
     output += `###\n\n`;
   });
 
