@@ -11,13 +11,13 @@
 </head>
 <body>
 
-<h2>Tekeyのイニシアチブの中身をコピペして</h2>
-<a>Tekeyのイニシアチブの中身をコピペして。数字だけ以外の文字を名前として修正するコマンドを生成する。<a/>
-<a>項目名は選択しないで。<a/>
+<h2>Tekeyステータステーブル修正コマンド生成ツール</h2>
+<a>項目名の下から選択して、Tekeyのイニシアチブの中身をコピペしてください。<br>1行ごとを名前として読み取り、修正するコマンドを生成します。<br>数字だけの行は無視します。<br>↓のテキストボックスにコピペ<a/>
 <textarea id="inputText"></textarea>
 <br>
 
 <!-- チェックボックスを追加 -->
+<a>チェックボックが入ってる文章が生成されます。<a/>
 <div>
   <label><input type="checkbox" id="hp" checked>:HP=</label>
   <label><input type="checkbox" id="hpPlus" checked>:HP+</label>
@@ -33,9 +33,10 @@
 
 <button onclick="processInput()">生成</button>
 
-<h2>出力</h2>
+<h2>↓に出力</h2>
 <textarea id="output" style="height: 150px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
-### //Character0=
+サンプル
+### //Character0=サンプル
 :HP= @[name]:{Character0}
 :HP+ @[name]:{Character0}
 :HP- @[name]:{Character0}
