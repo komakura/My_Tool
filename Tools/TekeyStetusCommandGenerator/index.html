@@ -19,9 +19,15 @@
 <button onclick="processInput()">生成</button>
 
 <h2>出力</h2>
-<pre id="output"></pre>
+<textarea id="output" style="height: auto;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';"></textarea>
 
 <script>
+function adjustTextareaHeight() {
+  const outputTextarea = document.getElementById("output");
+  outputTextarea.style.height = '';
+  outputTextarea.style.height = outputTextarea.scrollHeight + 'px';
+}
+
 function processInput() {
   const input = document.getElementById("inputText").value;
   const lines = input.split(/\r?\n/);
@@ -44,7 +50,10 @@ function processInput() {
     output += `###\n\n`;
   });
 
-  document.getElementById("output").textContent = output;
+  const outputTextarea = document.getElementById("output");
+  outputTextarea.value = ""; // 手動入力をリセット
+  outputTextarea.value = output; // 新しい内容を設定
+  adjustTextareaHeight();
 }
 </script>
 
