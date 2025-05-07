@@ -5,7 +5,7 @@
   <title>Tekeyステータステーブル修正コマンド生成ツール</title>
   <style>
     body { font-family: sans-serif; padding: 20px; }
-    textarea { width: 100%; height: 150px; }
+    textarea { width: 100%; height: 100px; }
     pre { background: #f0f0f0; padding: 10px; white-space: pre-wrap; }
   </style>
 </head>
@@ -27,14 +27,23 @@
   <label><input type="checkbox" id="hpCPlus">:HP+C(0+)</label>
   <label><input type="checkbox" id="hpCMinus">:HP-C(0+)</label>
   <label><input type="checkbox" id="mpCPlus">:MP+C(0+)</label>
-  <label><input type="checkbox" id="mpCMinus">:MP-C(0+)</label>
+  <label><input type="checkbox" id="mpCMinus">:MP-C(0+)</label> 
+  <br><label><input type="checkbox" id="apPlus" checked>:防護点+</label>
+  <label><input type="checkbox" id="apMinus" checked>:防護点-</label>
+  <label><input type="checkbox" id="addHpPlus" checked>:追加HP+</label>
+  <label><input type="checkbox" id="addHpMinus" checked>:追加HP-</label>
+</div>
+<div>
+  <label><input type="checkbox" id="custom1" checked>:<input type="text" id="customText1" placeholder="自由入力1" style="width: 200px;"></label><br>
+  <label><input type="checkbox" id="custom2" checked>:<input type="text" id="customText2" placeholder="自由入力2" style="width: 200px;"></label><br>
+  <label><input type="checkbox" id="custom3" checked>:<input type="text" id="customText3" placeholder="自由入力3" style="width: 200px;"></label><br>
 </div>
 <br>
 
 <button onclick="processInput()">生成</button>
 
 <h2>↓に出力</h2>
-<textarea id="output" style="height: 150px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
+<textarea id="output" style="height: 200px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
 サンプル
 ### //Character0=サンプル
 :HP= @[name]:{Character0}
@@ -42,6 +51,10 @@
 :HP- @[name]:{Character0}
 :MP+ @[name]:{Character0}
 :MP- @[name]:{Character0}
+:防護点+ @[name]:{Character0}
+:防護点- @[name]:{Character0}
+:追加HP+ @[name]:{Character0}
+:追加HP- @[name]:{Character0}
 ###
 </textarea>
 
@@ -69,6 +82,11 @@ function processInput() {
   const includeHPCMinus = document.getElementById("hpCMinus").checked;
   const includeMPCPlus = document.getElementById("mpCPlus").checked;
   const includeMPCMinus = document.getElementById("mpCMinus").checked;
+  const includeAPPlus = document.getElementById("apPlus").checked;
+  const includeAPMinus = document.getElementById("apMinus").checked;
+  const includeAddHPPlus = document.getElementById("addHpPlus").checked;
+  const includeAddHPMinus = document.getElementById("addHpMinus").checked;
+
 
   let output = "";
   PC.forEach((name, index) => {
@@ -82,6 +100,31 @@ function processInput() {
     if (includeHPCMinus) output += `:HP-C(0+) @[name]:{Character${index}}\n`;
     if (includeMPCPlus) output += `:MP+C(0+) @[name]:{Character${index}}\n`;
     if (includeMPCMinus) output += `:MP-C(0+) @[name]:{Character${index}}\n`;
+    if (includeAPPlus) output += `:防護点+ @[name]:{Character${index}}\n`;
+    if (includeAPMinus) output += `:防護点- @[name]:{Character${index}}\n`;
+    if (includeAddHPPlus) output += `:追加HP+ @[name]:{Character${index}}\n`;
+    if (includeAddHPMinus) output += `:追加HP- @[name]:{Character${index}}\n`;
+
+    // 自由入力のチェックボックスとテキストボックスの処理
+    // チェックボックスがチェックされていて、テキストボックスが空でない場合に出力
+    if (document.getElementById("custom1").checked && document.getElementById("customText1").value.trim() !== "") {
+      const customText1 = document.getElementById("customText1").value;
+      output += `:${customText1}+ @[name]:{Character${index}}\n`;
+      output += `:${customText1}- @[name]:{Character${index}}\n`;
+
+    }
+    if (document.getElementById("custom2").checked && document.getElementById("customText2").value.trim() !== "") {
+      const customText2 = document.getElementById("customText2").value;
+      output += `:${customText2}+ @[name]:{Character${index}}\n`;
+      output += `:${customText2}- @[name]:{Character${index}}\n`;
+      
+    }
+    if (document.getElementById("custom3").checked && document.getElementById("customText3").value.trim() !== "") {
+      const customText3 = document.getElementById("customText3").value;
+      output += `:${customText3}+ @[name]:{Character${index}}\n`;
+      output += `:${customText3}- @[name]:{Character${index}}\n`;
+    }
+    // ここに他のチェックボックスの処理を追加できます
     output += `###\n\n`;
   });
 
