@@ -69,8 +69,8 @@ function processInput() {
   const input = document.getElementById("inputText").value;
   const lines = input.split(/\r?\n/);
 
-  // 数字以外を抽出（空白・空行も除外）
-  const PC = lines.filter(line => isNaN(line.trim()) && line.trim() !== "");
+  // 数字以外を抽出（空白・空行、"数字 / 数字"も除外）
+  const PC = lines.filter(line => isNaN(line.trim()) && line.trim() !== "" && !/^\d+\s*\/\s*\d+$/.test(line.trim()));
 
   // チェックボックスの状態を取得
   const includeHP = document.getElementById("hp").checked;
