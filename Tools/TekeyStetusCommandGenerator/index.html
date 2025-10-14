@@ -13,7 +13,17 @@
 
 <h2>Tekeyステータステーブル修正コマンド生成ツール</h2>
 <a>項目名の下から選択して、Tekeyのイニシアチブの中身をコピペしてください。<br>1行ごとを名前として読み取り、修正するコマンドを生成します。<br>数字だけの行は無視します。詳細の文字も名前として読み取って生成します。手動で消してください。<br>↓のテキストボックスにコピペ<a/>
-<textarea id="inputText"></textarea>
+<textarea id="inputText">
+10
+0
+サンプル0
+10 / 10
+5 / 5
+7
+サンプル1
+15 / 15
+2 / 2
+</textarea>
 <br>
 
 <!-- チェックボックスを追加 -->
@@ -45,7 +55,7 @@
 <h2>↓に出力</h2>
 <textarea id="output" style="height: 200px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
 サンプル
-### //Character0=サンプル
+### //Character0=サンプル0
 :HP= @[name]:{Character0}
 :HP+ @[name]:{Character0}
 :HP- @[name]:{Character0}
@@ -55,6 +65,18 @@
 :防護点- @[name]:{Character0}
 :追加HP+ @[name]:{Character0}
 :追加HP- @[name]:{Character0}
+###
+
+### //Character1=サンプル1
+:HP= @[name]:{Character1}
+:HP+ @[name]:{Character1}
+:HP- @[name]:{Character1}
+:MP+ @[name]:{Character1}
+:MP- @[name]:{Character1}
+:防護点+ @[name]:{Character1}
+:防護点- @[name]:{Character1}
+:追加HP+ @[name]:{Character1}
+:追加HP- @[name]:{Character1}
 ###
 </textarea>
 
