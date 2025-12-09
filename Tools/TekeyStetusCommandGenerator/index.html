@@ -5,75 +5,126 @@
   <title>Tekeyステータステーブル修正コマンド生成ツール</title>
   <style>
     body { font-family: sans-serif; padding: 20px; }
-    textarea { width: 100%; height: 100px; }
+    textarea { width: 500px; height: 25px; font-size: 15px; resize: none; overflow: hidden; vertical-align: center; padding: 2px; text-align: middle; wrap: off; horizontal-align: left;}
+    button { height: 25px; vertical-align: center; }
+    /* customText系の入力を名前リストのtextareaと左端を合わせる */
+    #customInputContainer input[type="text"] {
+      margin-left: 30px; /* 名前欄の削除ボタン幅(25px)＋余白(5px)に合わせる */
+      width: 500px;
+      height: 25px;
+      font-size: 15px;
+      padding: 2px;
+      box-sizing: border-box;
+    }
     pre { background: #f0f0f0; padding: 10px; white-space: pre-wrap; }
+
   </style>
 </head>
 <body>
 
 <h2>Tekeyステータステーブル修正コマンド生成ツール</h2>
-<a>項目名の下から選択して、Tekeyのイニシアチブの中身をコピペしてください。<br>1行ごとを名前として読み取り、修正するコマンドを生成します。<br>数字だけの行は無視します(10/10とか7とか)。詳細の文字も名前として読み取って生成します。手動で消してください。<br>↓のテキストボックスにコピペ<a/>
-<textarea id="inputText">
-サンプル0
+<a>項目名の下から選択して、Tekeyのイニシアチブの中身をコピペしてください。名前リストに転写します。<br>数字だけの行は無視します(10/10とか7とか)。詳細の文字も名前として読み取って生成します。手動で消してください。<br>↓のテキストボックスにコピペ<a/><br>
+<textarea id="inputTextAllNames" style="resize: auto; width: 500px; height: 100px;"vertical-align: top;>
+キャラクター名1
 10 / 10
 5 / 5
 7
-サンプル1
+キャラクター名2
 15 / 15
 </textarea>
 <br>
+<button onclick="extractAllNamesToEachTextarea()">↓に名前を移動</button>　<button onclick="addNameTextarea()">名前入力欄を追加する</button>　<button onclick="removeLastNameTextarea()">一番下の名前入力欄を削除する</button>
 
+<br><br>
+<a style="margin-top: 10px;">名前リスト　不要な名前入力欄は削除してください</a><br>
+<div id="inputNameContainer">
+  <div style="display: flex; align-items: center; margin-bottom: 2px;">
+    <button onclick="removeNameTextarea(0)" style="margin-right: 5px; height: 25px;">削除</button>
+    <textarea id="inputName0" placeholder="キャラクター名">キャラクター名1</textarea>
+  </div>
+  <div style="display: flex; align-items: center; margin-bottom: 2px;">
+    <button onclick="removeNameTextarea(1)" style="margin-right: 5px; height: 25px;">削除</button>
+    <textarea id="inputName1" placeholder="キャラクター名">キャラクター名2</textarea>
+  </div>
+  <div style="display: flex; align-items: center; margin-bottom: 2px;">
+    <button onclick="removeNameTextarea(2)" style="margin-right: 5px; height: 25px;">削除</button>
+    <textarea id="inputName2" placeholder="キャラクター名"></textarea>
+  </div>
+  <div style="display: flex; align-items: center; margin-bottom: 2px;">
+    <button onclick="removeNameTextarea(3)" style="margin-right: 5px; height: 25px;">削除</button>
+    <textarea id="inputName3" placeholder="キャラクター名"></textarea>
+  </div>
+  <div style="display: flex; align-items: center; margin-bottom: 2px;">
+    <button onclick="removeNameTextarea(4)" style="margin-right: 5px; height: 25px;">削除</button>
+    <textarea id="inputName4" placeholder="キャラクター名"></textarea>
+  </div>
+</div>
+<br>
 <!-- チェックボックスを追加 -->
 <a>チェックボックが入ってる文章が生成されます。<a/>
 <div>
   <label><input type="checkbox" id="hp" checked>:HP=</label>
-  <label><input type="checkbox" id="hpPlus" checked>:HP+</label>
-  <label><input type="checkbox" id="hpMinus" checked>:HP-</label>
-  <label><input type="checkbox" id="mpPlus" checked>:MP+</label>
-  <label><input type="checkbox" id="mpMinus" checked>:MP-</label>
-  <label><input type="checkbox" id="hpCPlus">:HP+C(0+)</label>
-  <label><input type="checkbox" id="hpCMinus">:HP-C(0+)</label>
-  <label><input type="checkbox" id="mpCPlus">:MP+C(0+)</label>
-  <label><input type="checkbox" id="mpCMinus">:MP-C(0+)</label> 
-  <br><label><input type="checkbox" id="apPlus" checked>:防護点+</label>
-  <label><input type="checkbox" id="apMinus" checked>:防護点-</label>
-  <label><input type="checkbox" id="addHpPlus" checked>:追加HP+</label>
-  <label><input type="checkbox" id="addHpMinus" checked>:追加HP-</label>
+  <div style="display: flex; align-items: flex-start; margin-bottom: 2px;">
+    <label style="margin-right: 5px; padding-top: 2px;"><input type="checkbox" id="group1Toggle" checked onchange="toggleGroup1(this.checked)"></label>
+    <div style="padding: 2px; border: 1px solid #333333; flex: 1;">
+      <label><input type="checkbox" id="hpPlus" checked>:HP+</label>
+      <label><input type="checkbox" id="hpMinus" checked>:HP-</label>
+      <label><input type="checkbox" id="mpPlus" checked>:MP+</label>
+      <label><input type="checkbox" id="mpMinus" checked>:MP-</label>  
+    </div>
+  </div>
+  
+  <div style="display: flex; align-items: flex-start; margin-bottom: 2px;">
+    <label style="margin-right: 5px; padding-top: 2px;"><input type="checkbox" id="group2Toggle" onchange="toggleGroup2(this.checked)"></label>
+    <div style="padding: 2px; border: 1px solid #333333; flex: 1;">
+      <label><input type="checkbox" id="hpCPlus">:HP+C(0+)</label>
+      <label><input type="checkbox" id="hpCMinus">:HP-C(0+)</label>
+      <label><input type="checkbox" id="mpCPlus">:MP+C(0+)</label>
+      <label><input type="checkbox" id="mpCMinus">:MP-C(0+)</label> 
+    </div>
+  </div>
+  
+  <div style="display: flex; align-items: flex-start; margin-bottom: 2px;">
+    <label style="margin-right: 5px; padding-top: 2px;"><input type="checkbox" id="group3Toggle" onchange="toggleGroup3(this.checked)"></label>
+    <div style="padding: 2px; border: 1px solid #333333; flex: 1;">
+      <label><input type="checkbox" id="apPlus">:防護点+</label>
+      <label><input type="checkbox" id="apMinus">:防護点-</label>
+      <label><input type="checkbox" id="addHpPlus">:追加HP+</label>
+      <label><input type="checkbox" id="addHpMinus">:追加HP-</label>
+    </div>
+  </div>
+
 </div>
+
 <div>
-  <label><input type="checkbox" id="custom1" checked>:<input type="text" id="customText1" placeholder="自由入力1" style="width: 200px;"></label><br>
-  <label><input type="checkbox" id="custom2" checked>:<input type="text" id="customText2" placeholder="自由入力2" style="width: 200px;"></label><br>
-  <label><input type="checkbox" id="custom3" checked>:<input type="text" id="customText3" placeholder="自由入力3" style="width: 200px;"></label><br>
+  <button style="margin-left: 25px;" onclick="addCustomInput()">自由入力を追加する</button>　<button onclick="removeLastCustomInput()">一番下の自由入力を削除する</button>
+  <div id="customInputContainer">
+    <label><input type="checkbox" id="custom0" checked><input type="text" id="customText0" placeholder="自由入力1" style="margin-left: 5px;"></label><br>
+    <label><input type="checkbox" id="custom1" checked><input type="text" id="customText1" placeholder="自由入力2" style="margin-left: 5px;"></label><br>
+    <label><input type="checkbox" id="custom2" checked><input type="text" id="customText2" placeholder="自由入力3" style="margin-left: 5px;"></label><br>
+  </div>
 </div>
 <br>
 
 <button onclick="processInput()">生成</button>
 
-<h2>↓に出力</h2>
+<a>↓に出力</a><br>
 <textarea id="output" style="height: 500px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
 サンプル
-### //Character0=サンプル0
+### //Character1=キャラクター1
 :HP= @[name]:{Character0}
 :HP+ @[name]:{Character0}
 :HP- @[name]:{Character0}
 :MP+ @[name]:{Character0}
 :MP- @[name]:{Character0}
-:防護点+ @[name]:{Character0}
-:防護点- @[name]:{Character0}
-:追加HP+ @[name]:{Character0}
-:追加HP- @[name]:{Character0}
 ###
 
-### //Character1=サンプル1
+### //Character2=キャラクター2
 :HP= @[name]:{Character1}
 :HP+ @[name]:{Character1}
 :HP- @[name]:{Character1}
 :MP+ @[name]:{Character1}
 :MP- @[name]:{Character1}
-:防護点+ @[name]:{Character1}
-:防護点- @[name]:{Character1}
-:追加HP+ @[name]:{Character1}
-:追加HP- @[name]:{Character1}
 ###
 </textarea>
 
@@ -84,12 +135,304 @@ function adjustTextareaHeight() {
   outputTextarea.style.height = outputTextarea.scrollHeight + 'px';
 }
 
-function processInput() {
-  const input = document.getElementById("inputText").value;
-  const lines = input.split(/\r?\n/);
+// グループ1のチェックボックスを一括ON/OFF
+function toggleGroup1(checked) {
+  document.getElementById("hpPlus").checked = checked;
+  document.getElementById("hpMinus").checked = checked;
+  document.getElementById("mpPlus").checked = checked;
+  document.getElementById("mpMinus").checked = checked;
+}
 
-  // 数字以外を抽出（空白・空行、"数字 / 数字"も除外）
-  const PC = lines.filter(line => isNaN(line.trim()) && line.trim() !== "" && !/^\d+\s*\/\s*\d+$/.test(line.trim()));
+// グループ1内のチェックボックスが変更されたときに、親チェックボックスの状態を更新
+function updateGroup1Toggle() {
+  const hpPlus = document.getElementById("hpPlus").checked;
+  const hpMinus = document.getElementById("hpMinus").checked;
+  const mpPlus = document.getElementById("mpPlus").checked;
+  const mpMinus = document.getElementById("mpMinus").checked;
+  
+  const group1Toggle = document.getElementById("group1Toggle");
+  group1Toggle.checked = hpPlus && hpMinus && mpPlus && mpMinus;
+}
+
+// ページ読み込み時にイベントリスナーを設定
+window.addEventListener('DOMContentLoaded', function() {
+  const group1Checkboxes = ['hpPlus', 'hpMinus', 'mpPlus', 'mpMinus'];
+  group1Checkboxes.forEach(id => {
+    document.getElementById(id).addEventListener('change', updateGroup1Toggle);
+  });
+});
+
+// グループ2のチェックボックスを一括ON/OFF
+function toggleGroup2(checked) {
+  document.getElementById("hpCPlus").checked = checked;
+  document.getElementById("hpCMinus").checked = checked;
+  document.getElementById("mpCPlus").checked = checked;
+  document.getElementById("mpCMinus").checked = checked;
+}
+
+// グループ2内のチェックボックスが変更されたときに、親チェックボックスの状態を更新
+function updateGroup2Toggle() {
+  const hpCPlus = document.getElementById("hpCPlus").checked;
+  const hpCMinus = document.getElementById("hpCMinus").checked;
+  const mpCPlus = document.getElementById("mpCPlus").checked;
+  const mpCMinus = document.getElementById("mpCMinus").checked;
+
+  const group2Toggle = document.getElementById("group2Toggle");
+  group2Toggle.checked = hpCPlus && hpCMinus && mpCPlus && mpCMinus;
+}
+
+// ページ読み込み時にイベントリスナーを設定
+window.addEventListener('DOMContentLoaded', function() {
+  const group2Checkboxes = ['hpCPlus', 'hpCMinus', 'mpCPlus', 'mpCMinus'];
+  group2Checkboxes.forEach(id => {
+    document.getElementById(id).addEventListener('change', updateGroup2Toggle);
+  });
+});
+
+// グループ3のチェックボックスを一括ON/OFF
+function toggleGroup3(checked) {
+  document.getElementById("apPlus").checked = checked;
+  document.getElementById("apMinus").checked = checked;
+  document.getElementById("addHpPlus").checked = checked;
+  document.getElementById("addHpMinus").checked = checked;
+}
+
+// グループ3内のチェックボックスが変更されたときに、親チェックボックスの状態を更新
+function updateGroup3Toggle() {
+  const apPlus = document.getElementById("apPlus").checked;
+  const apMinus = document.getElementById("apMinus").checked;
+  const addHpPlus = document.getElementById("addHpPlus").checked;
+  const addHpMinus = document.getElementById("addHpMinus").checked;
+
+  const group3Toggle = document.getElementById("group3Toggle");
+  group3Toggle.checked = apPlus && apMinus && addHpPlus && addHpMinus;
+}
+
+// ページ読み込み時にイベントリスナーを設定
+window.addEventListener('DOMContentLoaded', function() {
+  const group3Checkboxes = ['apPlus', 'apMinus', 'addHpPlus', 'addHpMinus'];
+  group3Checkboxes.forEach(id => {
+    document.getElementById(id).addEventListener('change', updateGroup3Toggle);
+  });
+});
+
+// 名前を移動させるボタン関数
+function extractAllNamesToEachTextarea() {
+  const inputAllNames = document.getElementById("inputTextAllNames").value;
+  const lines = inputAllNames.split(/\r?\n/);
+  const names = lines.filter(line => isNaN(line.trim()) && line.trim() !== "" && !/^\d+\s*\/\s*\d+$/.test(line.trim()));
+
+  resetInputNameContainer();
+  const container = document.getElementById("inputNameContainer");
+  
+  // 既存のtextareaを配列として取得
+  const existingTextareas = Array.from(container.querySelectorAll("textarea"));
+
+  for (let i = 0; i < names.length; i++) {
+    const name = names[i];
+    let textarea;
+    
+    // 既存のtextareaがi番目に存在する場合はそれを使用
+    if (i < existingTextareas.length) {
+      textarea = existingTextareas[i];
+    } else {
+      // 既存のtextareaが足りない場合のみ、新しいtextareaを追加
+      addNameTextarea();
+      // 追加後の最新のtextareaを取得
+      const updatedTextareas = container.querySelectorAll("textarea");
+      textarea = updatedTextareas[updatedTextareas.length - 1];
+    }
+    textarea.value = name;
+  }
+}
+
+// inputNameContainer内のすべてのtextareaを空欄にリセットする関数
+function resetInputNameContainer() {
+  const container = document.getElementById("inputNameContainer");
+  const textareas = container.querySelectorAll("textarea");
+  textareas.forEach(textarea => {
+    textarea.value = "";
+  });
+}
+
+// inputNameContainer内のtextarea群の一番下に新しいtextareaを追加する関数
+function addNameTextarea() {
+  const container = document.getElementById("inputNameContainer");
+  const textareas = container.querySelectorAll("textarea");
+  
+  // 次の番号を決定（既存のtextareaの数）
+  const nextIndex = textareas.length;
+  
+  // divコンテナを作成
+  const div = document.createElement("div");
+  div.style.cssText = "display: flex; align-items: center; padding-bottom: 2px;";
+
+  // 削除ボタンを作成
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "削除";
+  deleteButton.style.marginRight = "5px";
+  deleteButton.style.height = "25px";
+  deleteButton.onclick = () => removeNameTextarea(nextIndex);
+
+  // 新しいtextareaを作成
+  const textarea = document.createElement("textarea");
+  textarea.id = `inputName${nextIndex}`;
+  textarea.setAttribute("wrap", "off");
+  textarea.setAttribute("placeholder", `キャラクター名`);
+  
+    // divにtextareaとボタンを追加
+  div.appendChild(deleteButton);
+  div.appendChild(textarea);
+  
+  // コンテナに追加
+  container.appendChild(div);
+}
+
+// inputNameContainer内のtextarea群の一番下の行を削除する関数
+function removeLastNameTextarea() {
+  const container = document.getElementById("inputNameContainer");
+  const textareas = container.querySelectorAll("textarea");
+  
+  // textareaが存在しない場合は何もしない
+  if (textareas.length === 0) {
+    return;
+  }
+  
+  // 最後のtextareaを直接取得
+  const lastTextarea = textareas[textareas.length - 1];
+  
+  // textareaを含む親div要素を取得して削除
+  const parentDiv = lastTextarea.closest("div");
+  if (parentDiv) {
+    parentDiv.remove();
+  } else {
+    // 親divがない場合はtextareaだけ削除（旧形式対応）
+    lastTextarea.remove();
+  }
+  
+  // 削除後にtextareaが1つもない場合、新しいtextareaを追加
+  const remainingTextareas = container.querySelectorAll("textarea");
+  if (remainingTextareas.length === 0) {
+    addNameTextarea();
+  }
+}
+
+// 指定したインデックスのtextarea行を削除する関数
+function removeNameTextarea(index) {
+  const container = document.getElementById("inputNameContainer");
+  const textarea = document.getElementById(`inputName${index}`);
+  
+  // textareaが存在しない場合は何もしない
+  if (!textarea) {
+    return;
+  }
+  
+  // textareaを含む親div要素を取得して削除
+  const parentDiv = textarea.closest("div");
+  if (parentDiv) {
+    parentDiv.remove();
+  } else {
+    // 親divがない場合はtextareaだけ削除（旧形式対応）
+    textarea.remove();
+  }
+  
+  // 削除後にtextareaが1つもない場合、新しいtextareaを追加
+  const remainingTextareas = container.querySelectorAll("textarea");
+  if (remainingTextareas.length === 0) {
+    addNameTextarea();
+  } else {
+    // IDを再振り当てする必要がある（オプション：必要に応じて実装）
+    // 今回は削除された要素のIDはそのまま残るが、新規追加時は連番で追加される
+  }
+}
+
+// customInputContainer内に新しいcustom入力欄を追加する関数
+function addCustomInput() {
+  const container = document.getElementById("customInputContainer");
+  const customInputs = container.querySelectorAll("label");
+  
+  // 次の番号を決定（既存のcustom入力欄の数）
+  const nextIndex = customInputs.length;
+  
+  // 新しいlabel要素を作成
+  const label = document.createElement("label");
+  
+  // チェックボックスを作成
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = `custom${nextIndex}`;
+  checkbox.checked = true;
+  
+  // テキストボックスを作成
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.id = `customText${nextIndex}`;
+  textInput.placeholder = `自由入力${nextIndex + 1}`;
+  // customText系の入力を名前リストのtextareaと左端を合わせる
+  textInput.style.padding = "2px";
+  textInput.style.marginLeft = "5px";
+  textInput.style.width = "500px";
+  textInput.style.height = "25px";
+  textInput.style.fontSize = "15px";
+  textInput.style.boxSizing = "border-box";
+  textInput.style.verticalAlign = "center";
+  textInput.style.textAlign = "middle";
+  textInput.style.wrap = "off";
+  textInput.style.horizontalAlign = "left";
+
+  // label要素に追加
+  label.appendChild(checkbox);
+  label.appendChild(textInput);
+  
+  // brタグを作成
+  const br = document.createElement("br");
+  
+  // コンテナに追加
+  container.appendChild(label);
+  container.appendChild(br);
+}
+
+// customInputContainer内の一番下のcustom入力欄を削除する関数
+function removeLastCustomInput() {
+  const container = document.getElementById("customInputContainer");
+  const customInputs = container.querySelectorAll("label");
+  
+  // custom入力欄が存在しない場合は何もしない
+  if (customInputs.length === 0) {
+    return;
+  }
+  
+  // 最後のlabel要素を取得
+  const lastLabel = customInputs[customInputs.length - 1];
+  
+  // 最後のlabel要素の次の兄弟要素（brタグ）を取得
+  const nextSibling = lastLabel.nextSibling;
+  
+  // label要素を削除
+  lastLabel.remove();
+  
+  // 次の兄弟要素がbrタグの場合は削除
+  if (nextSibling && nextSibling.nodeName === "BR") {
+    nextSibling.remove();
+  }
+  
+  // 削除後にcustom入力欄が1つもない場合、新しいcustom入力欄を追加
+  const remainingCustomInputs = container.querySelectorAll("label");
+  if (remainingCustomInputs.length === 0) {
+    addCustomInput();
+  }
+}
+
+
+function processInput() {
+  // inputNameContainer内のすべてのtextareaから値を取得
+  const container = document.getElementById("inputNameContainer");
+  const textareas = container.querySelectorAll("textarea");
+  
+  // 各textareaの値を取得し、空でないものだけをフィルタリング
+  const PC = Array.from(textareas)
+    .map(textarea => textarea.value.trim())
+    .filter(value => value !== "");
 
   // チェックボックスの状態を取得
   const includeHP = document.getElementById("hp").checked;
@@ -109,7 +452,7 @@ function processInput() {
 
   let output = "";
   PC.forEach((name, index) => {
-    output += `### //Character${index}=${name}\n`;
+    output += `### //Character${index + 1}=${name}\n`;
     if (includeHP) output += `:HP= @[name]:{Character${index}}\n`;
     if (includeHPPlus) output += `:HP+ @[name]:{Character${index}}\n`;
     if (includeHPMinus) output += `:HP- @[name]:{Character${index}}\n`;
@@ -125,25 +468,21 @@ function processInput() {
     if (includeAddHPMinus) output += `:追加HP- @[name]:{Character${index}}\n`;
 
     // 自由入力のチェックボックスとテキストボックスの処理
-    // チェックボックスがチェックされていて、テキストボックスが空でない場合に出力
-    if (document.getElementById("custom1").checked && document.getElementById("customText1").value.trim() !== "") {
-      const customText1 = document.getElementById("customText1").value;
-      output += `:${customText1}+ @[name]:{Character${index}}\n`;
-      output += `:${customText1}- @[name]:{Character${index}}\n`;
-
-    }
-    if (document.getElementById("custom2").checked && document.getElementById("customText2").value.trim() !== "") {
-      const customText2 = document.getElementById("customText2").value;
-      output += `:${customText2}+ @[name]:{Character${index}}\n`;
-      output += `:${customText2}- @[name]:{Character${index}}\n`;
+    // customInputContainer内のすべてのcustom要素を動的に処理
+    const customContainer = document.getElementById("customInputContainer");
+    const customLabels = customContainer.querySelectorAll("label");
+    
+    customLabels.forEach((label, customIndex) => {
+      const checkbox = label.querySelector('input[type="checkbox"]');
+      const textInput = label.querySelector('input[type="text"]');
       
-    }
-    if (document.getElementById("custom3").checked && document.getElementById("customText3").value.trim() !== "") {
-      const customText3 = document.getElementById("customText3").value;
-      output += `:${customText3}+ @[name]:{Character${index}}\n`;
-      output += `:${customText3}- @[name]:{Character${index}}\n`;
-    }
-    // ここに他のチェックボックスの処理を追加できます
+      // チェックボックスがチェックされていて、テキストボックスが空でない場合に出力
+      if (checkbox && checkbox.checked && textInput && textInput.value.trim() !== "") {
+        const customText = textInput.value.trim();
+        output += `:${customText}+ @[name]:{Character${index}}\n`;
+        output += `:${customText}- @[name]:{Character${index}}\n`;
+      }
+    });
     output += `###\n\n`;
   });
 
