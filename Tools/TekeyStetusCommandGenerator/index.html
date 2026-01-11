@@ -112,19 +112,19 @@
 <textarea id="output" style="height: 500px;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">
 サンプル
 ### //Character1=キャラクター1
-:HP= @[name]:{Character0}
-:HP+ @[name]:{Character0}
-:HP- @[name]:{Character0}
-:MP+ @[name]:{Character0}
-:MP- @[name]:{Character0}
-###
-
-### //Character2=キャラクター2
 :HP= @[name]:{Character1}
 :HP+ @[name]:{Character1}
 :HP- @[name]:{Character1}
 :MP+ @[name]:{Character1}
 :MP- @[name]:{Character1}
+###
+
+### //Character2=キャラクター2
+:HP= @[name]:{Character2}
+:HP+ @[name]:{Character2}
+:HP- @[name]:{Character2}
+:MP+ @[name]:{Character2}
+:MP- @[name]:{Character2}
 ###
 </textarea>
 
@@ -453,19 +453,19 @@ function processInput() {
   let output = "";
   PC.forEach((name, index) => {
     output += `### //Character${index + 1}=${name}\n`;
-    if (includeHP) output += `:HP= @[name]:{Character${index}}\n`;
-    if (includeHPPlus) output += `:HP+ @[name]:{Character${index}}\n`;
-    if (includeHPMinus) output += `:HP- @[name]:{Character${index}}\n`;
-    if (includeMPPlus) output += `:MP+ @[name]:{Character${index}}\n`;
-    if (includeMPMinus) output += `:MP- @[name]:{Character${index}}\n`;
-    if (includeHPCPlus) output += `:HP+C(0+) @[name]:{Character${index}}\n`;
-    if (includeHPCMinus) output += `:HP-C(0+) @[name]:{Character${index}}\n`;
-    if (includeMPCPlus) output += `:MP+C(0+) @[name]:{Character${index}}\n`;
-    if (includeMPCMinus) output += `:MP-C(0+) @[name]:{Character${index}}\n`;
-    if (includeAPPlus) output += `:防護点+ @[name]:{Character${index}}\n`;
-    if (includeAPMinus) output += `:防護点- @[name]:{Character${index}}\n`;
-    if (includeAddHPPlus) output += `:追加HP+ @[name]:{Character${index}}\n`;
-    if (includeAddHPMinus) output += `:追加HP- @[name]:{Character${index}}\n`;
+    if (includeHP) output += `:HP= @[name]:{Character${index + 1}}\n`;
+    if (includeHPPlus) output += `:HP+ @[name]:{Character${index + 1}}\n`;
+    if (includeHPMinus) output += `:HP- @[name]:{Character${index + 1}}\n`;
+    if (includeMPPlus) output += `:MP+ @[name]:{Character${index + 1}}\n`;
+    if (includeMPMinus) output += `:MP- @[name]:{Character${index + 1}}\n`;
+    if (includeHPCPlus) output += `:HP+C(0+) @[name]:{Character${index + 1}}\n`;
+    if (includeHPCMinus) output += `:HP-C(0+) @[name]:{Character${index + 1}}\n`;
+    if (includeMPCPlus) output += `:MP+C(0+) @[name]:{Character${index + 1}}\n`;
+    if (includeMPCMinus) output += `:MP-C(0+) @[name]:{Character${index + 1}}\n`;
+    if (includeAPPlus) output += `:防護点+ @[name]:{Character${index + 1}}\n`;
+    if (includeAPMinus) output += `:防護点- @[name]:{Character${index + 1}}\n`;
+    if (includeAddHPPlus) output += `:追加HP+ @[name]:{Character${index + 1}}\n`;
+    if (includeAddHPMinus) output += `:追加HP- @[name]:{Character${index + 1}}\n`;
 
     // 自由入力のチェックボックスとテキストボックスの処理
     // customInputContainer内のすべてのcustom要素を動的に処理
