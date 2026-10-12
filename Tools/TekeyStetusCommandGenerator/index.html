@@ -23,15 +23,8 @@
 <body>
 
 <h2>Tekeyステータステーブル修正コマンド生成ツール</h2>
-<a>項目名の下から選択して、Tekeyのイニシアチブの中身をコピペしてください。名前リストに転写します。<br>数字だけの行は無視します(10/10とか7とか)。詳細の文字も名前として読み取って生成します。手動で消してください。<br>↓のテキストボックスにコピペ<a/><br>
-<textarea id="inputTextAllNames" style="resize: auto; width: 500px; height: 100px;"vertical-align: top; overflow: scroll;>
-キャラクター名1
-10 / 10
-5 / 5
-7
-キャラクター名2
-15 / 15
-</textarea>
+<a>項目名の下から選択して、Tekeyのイニシアチブの中身をコピペしてください。名前リストに転写します。<br>数字だけの行は無視します(10/10とか7とか)。詳細の文字も名前として読み取って生成します。手動で消してください。<a/><br>
+<textarea id="inputTextAllNames" style="resize: auto; width: 500px; height: 100px;"vertical-align: top; overflow: scroll; placeholder="ここのTekeyのイニシアチブタブをコピペしてください。"></textarea>
 <br>
 <button onclick="extractAllNamesToEachTextarea()">↓に名前を移動</button>　<button onclick="addNameTextarea()">名前入力欄を追加する</button>　<button onclick="removeLastNameTextarea()">一番下の名前入力欄を削除する</button>
 
@@ -40,11 +33,11 @@
 <div id="inputNameContainer">
   <div style="display: flex; align-items: center; margin-bottom: 2px;">
     <button onclick="removeNameTextarea(0)" style="margin-right: 5px; height: 25px;">削除</button>
-    <textarea id="inputName0" placeholder="キャラクター名">キャラクター名1</textarea>
+    <textarea id="inputName0" placeholder="キャラクター名"></textarea>
   </div>
   <div style="display: flex; align-items: center; margin-bottom: 2px;">
     <button onclick="removeNameTextarea(1)" style="margin-right: 5px; height: 25px;">削除</button>
-    <textarea id="inputName1" placeholder="キャラクター名">キャラクター名2</textarea>
+    <textarea id="inputName1" placeholder="キャラクター名"></textarea>
   </div>
   <div style="display: flex; align-items: center; margin-bottom: 2px;">
     <button onclick="removeNameTextarea(2)" style="margin-right: 5px; height: 25px;">削除</button>
