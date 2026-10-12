@@ -217,7 +217,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // 名前を移動させるボタン関数
 function extractAllNamesToEachTextarea() {
-  const inputAllNames = document.getElementById("inputTextAllNames").value;
+  const inputAllNames = document.getElementById("inputTextAllNames").value.replace(/\t/g, "");
   const lines = inputAllNames.split(/\r?\n/);
   const names = lines.filter(line => isNaN(line.trim()) && line.trim() !== "" && !/^\d+\s*\/\s*\d+$/.test(line.trim()));
 
